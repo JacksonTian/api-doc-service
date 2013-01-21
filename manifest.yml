@@ -1,0 +1,13 @@
+--- 
+applications: 
+  .: 
+    instances: 1
+    mem: 256M
+    name: alpha
+    framework: 
+      name: node
+      info: 
+        exec: 
+        mem: 64M
+        description: Node.js Application
+    url: ${name}.${target-base}

@@ -1,0 +1,17 @@
+{
+  "name": "api_service",
+  "version": "0.0.1",
+  "description": "ERROR: No README.md file found!",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "dependencies": {
+    "alpha": "0.0.4",
+    "connect": "*",
+    "wechat": "0.0.5"
+  },
+  "author": "Jackson Tian",
+  "license": "MIT"
+}
