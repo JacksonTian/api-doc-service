@@ -7,7 +7,7 @@ var app = connect();
 app.use(connect.query());
 app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
 app.use('/wechat', wechat(config.token, function (req, res, next) {
-  var input = req.weixin.Content;
+  var input = req.weixin.Content.trim();
   // 用户添加时候的消息
   if (input === 'Hello2BizUser') {
     return res.reply({msgType: 'text', content: '谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述'});
