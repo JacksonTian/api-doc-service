@@ -5,6 +5,7 @@ var alpha = require('alpha');
 
 var app = connect();
 app.use(connect.query());
+app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
 app.use('/wechat', wechat(config.token, function (req, res, next) {
   var input = req.weixin.Content;
   // 用户添加时候的消息
