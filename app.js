@@ -23,7 +23,7 @@ app.use('/wechat', wechat(config.token, function (req, res, next) {
       break;
     case 'MATCHED':
       content = data.result.map(function (item) {
-        var replaced = item.desc.replace(/<p>/ig, '')
+        var replaced = (item.desc || '').replace(/<p>/ig, '')
           .replace(/<\/p>/ig, '').replace(/<code>/ig, '').replace(/<\/code>/ig, '')
           .replace(/<pre>/ig, '').replace(/<\/pre>/ig, '')
           .replace(/<strong>/ig, '').replace(/<\/strong>/ig, '')
