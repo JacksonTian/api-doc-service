@@ -30,6 +30,7 @@ app.use('/wechat', wechat(config.token, function (req, res, next) {
           .replace(/<strong>/ig, '').replace(/<\/strong>/ig, '')
           .replace(/<ul>/ig, '').replace(/<\/ul>/ig, '')
           .replace(/<li>/ig, '').replace(/<\/li>/ig, '')
+          .replace(/<em>/ig, '').replace(/<\/em>/ig, '')
           .replace(/&#39;/ig, "'");
         return item.path + '\n' + item.textRaw + ':\n' + replaced;
       }).join('\n');
