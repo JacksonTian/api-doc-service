@@ -13,7 +13,7 @@ app.use('/wechat', wechat(config.token, function (req, res, next) {
     return res.reply({msgType: 'text', content: '谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等'});
   }
   if (input === '大王') {
-    return res.reply({msgType: "不要叫我大王，要叫我女王大人啊……"});
+    return res.reply({msgType: 'text', content: "不要叫我大王，要叫我女王大人啊……"});
   }
   if (input.length < 2) {
     return res.reply({msgType: 'text', content: '内容太少，请多输入一点:)'});
