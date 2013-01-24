@@ -6,12 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/JacksonTian/api-doc-service.git"
+  },
   "dependencies": {
-    "alpha": "0.0.4",
+    "alpha": "0.0.5",
     "connect": "*",
     "wechat": "0.0.5"
   },
   "author": "Jackson Tian",
-  "license": "MIT"
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "devDependencies": {},
+  "keywords": [
+    "Node",
+    "API",
+    "Documentation",
+    "Services"
+  ]
 }
