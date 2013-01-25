@@ -6,3 +6,6 @@ Node API Documentation Services
 ![](http://nodeapi.cloudfoundry.com/qrcode.jpg)
 
 输入关键词，该公共帐号将自动回复你API相关内容。
+
+## TODO
+- 发送地理信息可以查询NodeParty的举行情况

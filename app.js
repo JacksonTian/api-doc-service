@@ -11,13 +11,24 @@ app.use('/wechat', wechat(config.token, function (req, res, next) {
   var input = req.weixin.Content.trim();
   // 用户添加时候的消息
   if (input === 'Hello2BizUser') {
-    return res.reply({msgType: 'text', content: '谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等'});
+    return res.reply('谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等');
+  }
+  // 测试图文回复
+  if (input === 'news') {
+    return res.reply([
+      {
+        title: '你来我家接我吧',
+        description: '这是女神与高富帅之间的对话',
+        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
+        url: 'http://nodeapi.cloudfoundry.com/'
+      }
+    ]);
   }
   if (input === '大王') {
-    return res.reply({msgType: 'text', content: "不要叫我大王，要叫我女王大人啊……"});
+    return res.reply("不要叫我大王，要叫我女王大人啊……");
   }
   if (input.length < 2) {
-    return res.reply({msgType: 'text', content: '内容太少，请多输入一点:)'});
+    return res.reply('内容太少，请多输入一点:)');
   }
   var data = alpha.search(input);
   var content = '';
@@ -53,7 +64,7 @@ app.use('/wechat', wechat(config.token, function (req, res, next) {
   if (from === 'oPKu7jpSY1tD1xoyXtECiM3VXzdU') {
     content = '女王大人:\n' + content;
   }
-  res.reply({msgType: 'text', content: content.substring(0, 2000)});
+  res.reply(content.substring(0, 2000));
 }));
 
 app.use('/', function (req, res) {
