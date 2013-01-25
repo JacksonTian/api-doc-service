@@ -11,9 +11,10 @@
     "url": "git://github.com/JacksonTian/api-doc-service.git"
   },
   "dependencies": {
-    "alpha": "0.0.6",
+    "alpha": "0.0.7",
     "connect": "*",
-    "wechat": "0.1.0"
+    "wechat": "0.2.0",
+    "ejs": "*"
   },
   "author": "Jackson Tian",
   "license": "MIT",
