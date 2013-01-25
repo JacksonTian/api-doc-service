@@ -16,17 +16,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
   if (input === 'Hello2BizUser') {
     return res.reply('谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等');
   }
-  // 测试图文回复
-  if (input === 'news') {
-    return res.reply([
-      {
-        title: '你来我家接我吧',
-        description: '这是女神与高富帅之间的对话',
-        picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-        url: 'http://nodeapi.cloudfoundry.com/'
-      }
-    ]);
-  }
+
   if (input === '大王') {
     return res.reply("不要叫我大王，要叫我女王大人啊……");
   }
@@ -41,16 +31,26 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
       break;
     case 'MATCHED':
       content = data.result.map(function (item) {
+        var replaced = (item.desc || '')
+          .replace(/<p>/ig, '').replace(/<\/p>/ig, '')
+          .replace(/<code>/ig, '').replace(/<\/code>/ig, '')
+          .replace(/<pre>/ig, '').replace(/<\/pre>/ig, '')
+          .replace(/<strong>/ig, '').replace(/<\/strong>/ig, '')
+          .replace(/<ul>/ig, '').replace(/<\/ul>/ig, '')
+          .replace(/<li>/ig, '').replace(/<\/li>/ig, '')
+          .replace(/<em>/ig, '').replace(/<\/em>/ig, '')
+          .replace(/&#39;/ig, "'");
+
         return {
           title: item.path,
-          description: item.textRaw + ':\n' + item.desc,
+          description: item.textRaw + ':\n' + replaced,
           picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
           url: 'http://nodeapi.cloudfoundry.com/detail?id=' + item.hash
         };
       });
       if (data.more && data.more.length) {
         content.push({
-          title: '更多相关API',
+          title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
           description: data.more.join(', ').substring(0, 200) + '...',
           picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg'
         });
