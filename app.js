@@ -44,15 +44,15 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
         return {
           title: item.path,
           description: item.textRaw + ':\n' + replaced,
-          picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg',
-          url: 'http://nodeapi.cloudfoundry.com/detail?id=' + item.hash
+          picurl: config.domain + '/qrcode.jpg',
+          url: config.domain + '/detail?id=' + item.hash
         };
       });
       if (data.more && data.more.length) {
         content.push({
           title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
           description: data.more.join(', ').substring(0, 200) + '...',
-          picurl: 'http://nodeapi.cloudfoundry.com/qrcode.jpg'
+          picurl: config.domain + '/qrcode.jpg'
         });
       }
       break;
