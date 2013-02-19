@@ -8,7 +8,6 @@ var ejs = require('ejs');
 
 var app = connect();
 connect.logger.format('home', ':remote-addr :response-time - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :res[content-length]');
-
 app.use(connect.logger({
   format: 'home',
   stream: fs.createWriteStream(__dirname + '/logs/access.log')
