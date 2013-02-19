@@ -7,6 +7,12 @@ var alpha = require('alpha');
 var ejs = require('ejs');
 
 var app = connect();
+connect.logger.format('home', ':remote-addr :response-time - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :res[content-length]');
+
+app.use(connect.logger({
+  format: 'home',
+  stream: fs.createWriteStream(__dirname + '/logs/access.log')
+}));
 app.use(connect.query());
 app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
 app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res, next) {
