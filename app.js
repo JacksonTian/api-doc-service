@@ -104,5 +104,15 @@ app.use('/', function (req, res) {
   res.end('hello node api');
 });
 
+/**
+ * Error handler
+ */
+app.use(function (err, req, res, next) {
+  console.log(err.message);
+  console.log(err.stack);
+  res.statusCode = err.status || 500;
+  res.end(err.message);
+});
+
 var port = process.env.VCAP_APP_PORT || config.port || 3000;
 app.listen(port);
