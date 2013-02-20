@@ -11,7 +11,7 @@
     "url": "git://github.com/JacksonTian/api-doc-service.git"
   },
   "dependencies": {
-    "alpha": "0.0.7",
+    "alpha": "0.0.8",
     "connect": "*",
     "wechat": "0.3.2",
     "ejs": "*"
