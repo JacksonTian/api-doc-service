@@ -1,3 +1,4 @@
+
 var fs = require('fs');
 var path = require('path');
 var connect = require('connect');
@@ -5,6 +6,7 @@ var wechat = require('wechat');
 var config = require('./config');
 var alpha = require('alpha');
 var ejs = require('ejs');
+var worker = require('pm').createWorker();
 
 var app = connect();
 connect.logger.format('home', ':remote-addr :response-time - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :res[content-length]');
@@ -114,5 +116,6 @@ app.use(function (err, req, res, next) {
   res.end(err.message);
 });
 
-var port = process.env.VCAP_APP_PORT || config.port || 3000;
-app.listen(port);
+worker.ready(function (socket, port) {
+  app.emit('connection', socket);
+});
