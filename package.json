@@ -13,7 +13,7 @@
   "dependencies": {
     "alpha": "0.0.8",
     "connect": "*",
-    "wechat": "0.3.3",
+    "wechat": "0.3.5",
     "ejs": "*"
   },
   "author": "Jackson Tian",
