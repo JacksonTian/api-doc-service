@@ -1,6 +1,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var http = require('http');
 var connect = require('connect');
 var wechat = require('wechat');
 var config = require('./config');
@@ -116,6 +117,8 @@ app.use(function (err, req, res, next) {
   res.end(err.message);
 });
 
+var server = http.createServer(app);
+
 worker.ready(function (socket, port) {
-  app.emit('connection', socket);
+  server.emit('connection', socket);
 });
