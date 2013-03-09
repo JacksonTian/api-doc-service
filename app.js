@@ -60,7 +60,8 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
         content.push({
           title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
           description: data.more.join(', ').substring(0, 200) + '...',
-          picurl: config.domain + '/qrcode.jpg'
+          picurl: config.domain + '/qrcode.jpg',
+          url: config.domain + '/404'
         });
       }
       break;
