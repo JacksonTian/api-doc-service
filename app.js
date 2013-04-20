@@ -85,6 +85,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
   console.log(message);
   res.reply('心情不好，不想搭理你。');
 }).event(function (message, req, res) {
+  console.log(message);
   if (message.Event === 'subscribe') {
     // 用户添加时候的消息
     res.reply('谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等');
