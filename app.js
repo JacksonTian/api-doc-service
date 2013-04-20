@@ -7,7 +7,15 @@ var wechat = require('wechat');
 var config = require('./config');
 var alpha = require('alpha');
 var ejs = require('ejs');
+
 var worker = require('pm').createWorker();
+
+var List = require('wechat').List;
+List.add('view', [
+  ['回复{a}查看近期的NodeParty活动', function (info, req, res) {
+    res.nowait('暂无活动');
+  }]
+]);
 
 var app = connect();
 connect.logger.format('home', ':remote-addr :response-time - [:date] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :res[content-length]');
@@ -63,6 +71,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
     break;
   default:
     content = '没有找到“' + input + '”相关API。输入模块名，方法名，事件名等都能获取到相关内容。';
+    res.wait('view');
     break;
   }
   var from = message.FromUserName;
