@@ -16,7 +16,6 @@
     "afterEach",
     "should"
   ],
-
   "node": true,
   "es5": true,
   "bitwise": true,
@@ -40,5 +39,7 @@
   "expr": true,
   "multistr": true,
   "onevar": false,
-  "unused": true
+  "maxparams": 4,
+  "unused": "vars",
+  "maxdepth": 2
 }

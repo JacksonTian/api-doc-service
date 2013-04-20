@@ -17,13 +17,9 @@ app.use(connect.logger({
 }));
 app.use(connect.query());
 app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
-app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res, next) {
+app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res) {
   console.log(message);
   var input = (message.Content || '').trim();
-  // 用户添加时候的消息
-  if (input === 'Hello2BizUser') {
-    return res.reply('谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等');
-  }
 
   if (input === '大王') {
     return res.reply("不要叫我大王，要叫我女王大人啊……");
@@ -34,40 +30,40 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
   var data = alpha.search(input);
   var content = '';
   switch (data.status) {
-    case 'TOO_MATCHED':
-      content = '找到API过多，请精确一点：\n' + data.result.join(', ').substring(0, 100) + '...';
-      break;
-    case 'MATCHED':
-      content = data.result.map(function (item) {
-        var replaced = (item.desc || '')
-          .replace(/<p>/ig, '').replace(/<\/p>/ig, '')
-          .replace(/<code>/ig, '').replace(/<\/code>/ig, '')
-          .replace(/<pre>/ig, '').replace(/<\/pre>/ig, '')
-          .replace(/<strong>/ig, '').replace(/<\/strong>/ig, '')
-          .replace(/<ul>/ig, '').replace(/<\/ul>/ig, '')
-          .replace(/<li>/ig, '').replace(/<\/li>/ig, '')
-          .replace(/<em>/ig, '').replace(/<\/em>/ig, '')
-          .replace(/&#39;/ig, "'");
+  case 'TOO_MATCHED':
+    content = '找到API过多，请精确一点：\n' + data.result.join(', ').substring(0, 100) + '...';
+    break;
+  case 'MATCHED':
+    content = data.result.map(function (item) {
+      var replaced = (item.desc || '')
+        .replace(/<p>/ig, '').replace(/<\/p>/ig, '')
+        .replace(/<code>/ig, '').replace(/<\/code>/ig, '')
+        .replace(/<pre>/ig, '').replace(/<\/pre>/ig, '')
+        .replace(/<strong>/ig, '').replace(/<\/strong>/ig, '')
+        .replace(/<ul>/ig, '').replace(/<\/ul>/ig, '')
+        .replace(/<li>/ig, '').replace(/<\/li>/ig, '')
+        .replace(/<em>/ig, '').replace(/<\/em>/ig, '')
+        .replace(/&#39;/ig, "'");
 
-        return {
-          title: item.path,
-          description: item.textRaw + ':\n' + replaced,
-          picurl: config.domain + '/qrcode.jpg',
-          url: config.domain + '/detail?id=' + item.hash
-        };
+      return {
+        title: item.path,
+        description: item.textRaw + ':\n' + replaced,
+        picurl: config.domain + '/qrcode.jpg',
+        url: config.domain + '/detail?id=' + item.hash
+      };
+    });
+    if (data.more && data.more.length) {
+      content.push({
+        title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
+        description: data.more.join(', ').substring(0, 200) + '...',
+        picurl: config.domain + '/qrcode.jpg',
+        url: config.domain + '/404'
       });
-      if (data.more && data.more.length) {
-        content.push({
-          title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
-          description: data.more.join(', ').substring(0, 200) + '...',
-          picurl: config.domain + '/qrcode.jpg',
-          url: config.domain + '/404'
-        });
-      }
-      break;
-    default:
-      content = '没有找到“' + input + '”相关API。输入模块名，方法名，事件名等都能获取到相关内容。';
-      break;
+    }
+    break;
+  default:
+    content = '没有找到“' + input + '”相关API。输入模块名，方法名，事件名等都能获取到相关内容。';
+    break;
   }
   var from = message.FromUserName;
   if (!Array.isArray(content)) {
@@ -79,15 +75,24 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res,
     }
   }
   res.reply(content);
-}).image(function (message, req, res, next) {
+}).image(function (message, req, res) {
   console.log(message);
   res.reply('还没想好图片怎么处理啦。');
-}).location(function (message, req, res, next) {
+}).location(function (message, req, res) {
   console.log(message);
   res.reply('想和我约会吗，不要的啦。');
-}).voice(function (message, req, res, next) {
+}).voice(function (message, req, res) {
   console.log(message);
   res.reply('心情不好，不想搭理你。');
+}).event(function (message, req, res) {
+  if (message.Event === 'subscribe') {
+    // 用户添加时候的消息
+    res.reply('谢谢添加Node.js公共帐号:)\n回复Node.js API相关关键词，将会得到相关描述。如：module, setTimeout等');
+  } else if (message.Event === 'unsubscribe') {
+    res.reply('Bye!');
+  } else {
+    res.reply('暂未支持! Coming soon!');
+  }
 })));
 
 var tpl = ejs.compile(fs.readFileSync(path.join(__dirname, 'views/detail.html'), 'utf-8'));
@@ -111,7 +116,7 @@ app.use('/', function (req, res) {
 /**
  * Error handler
  */
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   console.log(err.message);
   console.log(err.stack);
   res.statusCode = err.status || 500;
@@ -120,6 +125,6 @@ app.use(function (err, req, res, next) {
 
 var server = http.createServer(app);
 
-worker.ready(function (socket, port) {
+worker.ready(function (socket) {
   server.emit('connection', socket);
 });
