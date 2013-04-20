@@ -74,6 +74,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
   default:
     content = '没有找到“' + input + '”相关API。输入模块名，方法名，事件名等都能获取到相关内容。';
     res.wait('view');
+    return;
     break;
   }
   var from = message.FromUserName;
