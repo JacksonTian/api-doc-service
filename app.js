@@ -25,6 +25,8 @@ app.use(connect.logger({
 }));
 app.use(connect.query());
 app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
+app.use(connect.cookieParser());
+app.use(connect.session({secret: config.secret}));
 app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res) {
   console.log(message);
   var input = (message.Content || '').trim();
