@@ -8,7 +8,8 @@ var master = pm.createMaster({
 var port = process.env.VCAP_APP_PORT || config.port || 3000;
 
 master.register('api', __dirname + '/app.js', {
-  'listen': [port]
+  'listen': [port],
+  'children': 1
 });
 
 master.on('giveup', function (name, num, pause) {
