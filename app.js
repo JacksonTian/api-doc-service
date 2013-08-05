@@ -58,7 +58,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
       return {
         title: item.path,
         description: item.textRaw + ':\n' + replaced,
-        picurl: config.domain + '/qrcode.jpg',
+        picurl: config.domain + '/assets/qrcode.jpg',
         url: config.domain + '/detail?id=' + item.hash
       };
     });
@@ -66,7 +66,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
       content.push({
         title: '更多：' + data.more.join(', ').substring(0, 200) + '...',
         description: data.more.join(', ').substring(0, 200) + '...',
-        picurl: config.domain + '/qrcode.jpg',
+        picurl: config.domain + '/assets/qrcode.jpg',
         url: config.domain + '/404'
       });
     }
@@ -85,6 +85,7 @@ app.use('/wechat', wechat(config.token, wechat.text(function (message, req, res)
       content = '女王大人:\n' + content;
     }
   }
+  console.log(content);
   res.reply(content);
 }).image(function (message, req, res) {
   console.log(message);
