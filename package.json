@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "alpha": "0.0.8",
-    "connect": "*",
+    "connect": "2.8.4",
     "pm": "*",
-    "wechat": "0.4.0",
+    "wechat": "0.6.0",
     "ejs": "*"
   },
   "author": "Jackson Tian",
