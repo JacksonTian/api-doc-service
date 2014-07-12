@@ -37,7 +37,6 @@ app.use(function (err, req, res) {
 });
 
 var server = http.createServer(app);
-
 var worker = require('pm').createWorker();
 worker.ready(function (socket) {
   server.emit('connection', socket);

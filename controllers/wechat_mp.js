@@ -24,6 +24,16 @@ exports.reply = wechat(config.token, wechat.text(function (message, req, res) {
   console.log(message);
   var input = (message.Content || '').trim();
 
+  if (input === 'login') {
+    res.reply([{
+      title: '登陆页面',
+      description: '去登陆',
+      picurl: config.domain + '/assets/qrcode.jpg',
+      url: config.domain + '/login'
+    }]);
+    return;
+  }
+
   if (input === '大王') {
     return res.reply("不要叫我大王，要叫我女王大人啊……");
   }
@@ -119,9 +129,10 @@ exports.detail = function (req, res) {
 
 var oauth = new wechat.OAuth(config.appid, config.appsecret);
 
-var tpl_login = ejs.compile(fs.readFileSync(path.join(VIEW_DIR, 'login.html'), 'utf-8'));
+var loginTpl = ejs.compile(fs.readFileSync(path.join(VIEW_DIR, 'login.html'), 'utf-8'));
+
 exports.login = function (req, res) {
   res.writeHead(200);
   var redirect = 'http://nodeapi.diveintonode.org/wechat/callback';
-  res.end(tpl({authorizeURL: oauth.getAuthorizeURL(redirect, 'state', 'snsapi_userinfo')}));
+  res.end(loginTpl({authorizeURL: oauth.getAuthorizeURL(redirect, 'state', 'snsapi_userinfo')}));
 };
