@@ -15,9 +15,12 @@ List.add('view', [
   }]
 ]);
 
+
+var callbackTpl = ejs.compile(fs.readFileSync(path.join(VIEW_DIR, 'callback.html'), 'utf-8'));
+
 exports.callback = function (req, res) {
   res.writeHead(200);
-  res.end('hello node api, I am callback page.');
+  res.end(callbackTpl(req.query));
 };
 
 exports.reply = wechat(config.token, wechat.text(function (message, req, res) {
