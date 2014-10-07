@@ -8,6 +8,8 @@ var VIEW_DIR = path.join(__dirname, '..', 'views');
 
 var config = require('../config');
 
+var oauth = new wechat.OAuth(config.appid, config.appsecret);
+
 var List = require('wechat').List;
 List.add('view', [
   ['没有找到相关API。输入模块名，方法名，事件名等都能获取到相关内容。\n回复{a}可以查看近期的NodeParty活动', function (info, req, res) {
@@ -20,7 +22,9 @@ var callbackTpl = ejs.compile(fs.readFileSync(path.join(VIEW_DIR, 'callback.html
 
 exports.callback = function (req, res) {
   res.writeHead(200);
-  res.end(callbackTpl(req.query));
+  oauth.getAccessToken(req.query.code, function (err, result) {
+    res.end(callbackTpl(req.query));
+  });
 };
 
 exports.reply = wechat(config.token, wechat.text(function (message, req, res) {
@@ -129,8 +133,6 @@ exports.detail = function (req, res) {
     res.end('Not Found');
   }
 };
-
-var oauth = new wechat.OAuth(config.appid, config.appsecret);
 
 var loginTpl = ejs.compile(fs.readFileSync(path.join(VIEW_DIR, 'login.html'), 'utf-8'));
 
