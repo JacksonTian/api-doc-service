@@ -14,7 +14,7 @@
     "alpha": "0.0.8",
     "connect": "2.8.4",
     "pm": "*",
-    "wechat": "0.8.14",
+    "wechat": "1.0.1",
     "wechat-enterprise": "https://github.com/node-webot/wechat-enterprise.git",
     "ejs": "1.0.0"
   },
