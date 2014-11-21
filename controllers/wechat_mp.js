@@ -27,7 +27,7 @@ exports.callback = function (req, res) {
   });
 };
 
-exports.reply = wechat(config.token, wechat.text(function (message, req, res) {
+exports.reply = wechat(config.mp, wechat.text(function (message, req, res) {
   console.log(message);
   var input = (message.Content || '').trim();
 
