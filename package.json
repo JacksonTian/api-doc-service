@@ -15,7 +15,7 @@
     "connect": "2.8.4",
     "pm": "*",
     "wechat": "1.0.1",
-    "wechat-enterprise": "https://github.com/node-webot/wechat-enterprise.git",
+    "wechat-enterprise": "0.0.5",
     "ejs": "1.0.0"
   },
   "author": "Jackson Tian",
