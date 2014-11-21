@@ -12,7 +12,7 @@ app.use(connect.logger({
   stream: fs.createWriteStream(__dirname + '/logs/access.log')
 }));
 app.use(connect.query());
-app.use(connect.static(__dirname + '/assets', { maxAge: 86400000 }));
+app.use('/assets', connect.static(__dirname + '/assets', { maxAge: 86400000 }));
 app.use(connect.cookieParser());
 app.use(connect.session({secret: config.secret}));
 
