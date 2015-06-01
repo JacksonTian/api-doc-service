@@ -9,3 +9,9 @@ Node API Documentation Services
 
 ## TODO
 - 发送地理信息可以查询NodeParty的举行情况
+
+## Usage
+copy `config.template.js` to `config.js`.
+
+## License
+The MIT license
